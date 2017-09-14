@@ -23,7 +23,7 @@ printf("%d\n",bltest());
 printf("age=%d\n",user1);
 printf("num n=%d\n",m);
 printf("please intput a char\n");
-printf("nihao:\t");
+//printf("nihao:\t");
 scanf("%s",&n);
 printf("nihao\nnishibushi\tyoubinga\vbushi a yexujiushi \n");
 return 0;
