@@ -26,5 +26,6 @@ printf("please intput a char\n");
 printf("nihao:\t");
 scanf("%s",&n);
 printf("nihao\nnishibushi\tyoubinga\vbushi a yexujiushi \n");
+printf("杨晓涵推送的内容\n");
 return 0;
 }
