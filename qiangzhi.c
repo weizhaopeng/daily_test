@@ -9,6 +9,7 @@ float e=125.67677;
 unsigned int f=20;
 int g;
 g=(a+b)+(c-d)+(e+f);
-printf("%lf",g);
+printf("%lf\n",g);
+printf("%lf\n",( double)a);
 return 0;
 } 
