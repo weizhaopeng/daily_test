@@ -8,5 +8,6 @@ printf("x=\n%d\n%10d\n%-5d\n%ld\n",x,x,x,x);
 printf("%o\n%5o\n%-2o\n%lo\n",y,y,y,y);
 printf("%s\n%10.5s\n%-5s\n%s\n",atr,atr,atr,str);
 printf("%x\n%10x\n%-5x\n%lx\n",y,y,y,y);
+printf("%e\n%11.2e\n%g\n%-5.1e\n",c,c,c,c);
 return 0;
 }
