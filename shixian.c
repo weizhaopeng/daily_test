@@ -7,6 +7,6 @@ printf("请输入a\n");
 scanf("%d",&a);
 printf("请输入b\n");
 scanf("%d",&b);
-printf("a b中更大的数值是：%d",sort(a,b));
+printf("a b中更大的数值是：%d\n",sort(a,b));
 return 0;
 }
