@@ -4,6 +4,7 @@ shixian:shixian.o sort.o
 
 shixian.o:shixian.c head_file.h
 sort.o:sort.c head_file.h
+
 .PHONY:clean
 clean:
 	-rm shixian.o sort.o 
