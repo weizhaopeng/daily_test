@@ -1,50 +1,35 @@
-#include"stdio.h"
-#include"stdlib.h"
-
-static int count;	
-
-struct stu
-{
-	int num;
-	char name[20];
-	char sex;
-};
-typedef struct stu STU;
-
-struct node
-{
-	STU student;
-	struct node *next;
-};
-typedef struct node NODE;
-
+#include"struct.h"
 NODE *creat()
 {
 	NODE *head,*new,*tail;
-	head=new=tail=(NODE *)malloc(sizeof(NODE));
-	tail->next=NULL;
-	puts("请输入学生的学号，姓名，性别：\n例如：15011630 魏朝鹏 m\n(男=m，女=f)");
-	scanf("%d%s%c",&new->student.num,new->student.name,&new->student.sex);
 
+	head=tail=(NODE *)malloc(sizeof(NODE));
+	puts("请输入学生姓名");
+	scanf("%s",head->student.name);
+	puts("请输入学生学号");
+	scanf("%d",&head->student.num);
 	for(int i=1;i<count;i++)
 	{
 		new=(NODE *)malloc(sizeof(NODE));
 
-	/*	if(new==NULL)
+		if(new==NULL)
 		{	
 			puts("分配错误");
 			exit(-1);
 		}
-*/
+
 		tail->next=new;
-		puts("请输入学生的学号，姓名，性别：\n例如：15011630 魏朝鹏 m\n(男=m，女=f)");
-		scanf("%d%s%c",&new->student.num,new->student.name,&new->student.sex);
+		puts("请输入学生姓名");
+		scanf("%s",new->student.name);
+		puts("请输入学生学号");
+		scanf("%d",&new->student.num);
 		
 		tail=new;
-		tail->next=NULL;
 	}
+	tail->next=NULL;
 	return head;
 }	
+
 int main (void)
 {
 	int n;
@@ -55,9 +40,10 @@ int main (void)
 
 	temp=head=creat();
 	
-	for(int i=0;i<count&&temp->next!=NULL;i++)
+	for(int i=0;i<count&&temp!=NULL;i++)
 	{
-		printf("%d\t%s\t%c\n",temp->student.num,temp->student.name,temp->student.sex);
+		printf("%s\n",temp->student.name);
+		printf("%d\n",temp->student.num);
 		temp=temp->next;
 	}	
 	return 0;
