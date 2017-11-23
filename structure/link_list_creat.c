@@ -1,5 +1,5 @@
 #include"struct.h"
-NODE *creat()
+NODE *link_list_creat()
 {
 	NODE *head,*new,*tail;
 
@@ -29,23 +29,4 @@ NODE *creat()
 	tail->next=NULL;
 	return head;
 }	
-
-int main (void)
-{
-	int n;
-	NODE *head,*temp;
-
-	puts("请输入学生人数");
-	scanf("%d",&count);
-
-	temp=head=creat();
-	
-	for(int i=0;i<count&&temp!=NULL;i++)
-	{
-		printf("%s\n",temp->student.name);
-		printf("%d\n",temp->student.num);
-		temp=temp->next;
-	}	
-	return 0;
-}
 
