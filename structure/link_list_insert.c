@@ -23,7 +23,7 @@ void link_list_insert(NODE *head,int n)
 	{
 		for(int i=1;i<n;i++)
 		temp=temp->next;
-		if(n==count+1)
+		if(temp->next==NULL)
 		{
 			temp->next=new;
 			new->next=NULL;

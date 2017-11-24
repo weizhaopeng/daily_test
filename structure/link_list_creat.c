@@ -1,5 +1,5 @@
 #include"struct.h"
-NODE *link_list_creat()
+NODE *link_list_creat(int count)
 {
 	NODE *head,*new,*tail;
 

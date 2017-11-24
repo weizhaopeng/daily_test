@@ -1,6 +1,7 @@
 #include"struct.h"
 int main (void)
 {
+	static int count;
 	int n,posi;
 	NODE *head,*temp;
 
