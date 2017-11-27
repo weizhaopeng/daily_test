@@ -1,7 +1,8 @@
 #include"struct.h"
-NODE *link_list_creat(int count)
+NODE *link_list_creat()
 {
 	NODE *head,*new,*tail;
+	extern int count;	
 
 	head=tail=(NODE *)malloc(sizeof(NODE));
 	puts("请输入学生姓名");
