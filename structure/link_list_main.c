@@ -1,5 +1,6 @@
 #include"struct.h"
-static int count;
+int count;
+
 int main (void)
 {
 	int n,posi;

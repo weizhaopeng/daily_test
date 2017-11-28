@@ -2,8 +2,7 @@
 NODE *link_list_creat()
 {
 	NODE *head,*new,*tail;
-	extern int count;	
-
+	extern int count;
 	head=tail=(NODE *)malloc(sizeof(NODE));
 	puts("请输入学生姓名");
 	scanf("%s",head->student.name);

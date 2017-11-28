@@ -21,4 +21,5 @@ typedef struct node NODE;
 NODE *link_list_creat();
 void link_list_insert(NODE *head,int n);
 void link_list_print(NODE *head);
+
 #endif
