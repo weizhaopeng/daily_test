@@ -21,15 +21,18 @@ void link_list_insert(NODE *head,int n)
 	}
 	else
 	{
-		for(int i=1;i<n;i++)
-		temp=temp->next;
+		for (int i=1;i<n-1;i++)
+			temp=temp->next;
 		if(temp->next==NULL)
-		{
+		{	
 			temp->next=new;
-			new->next=NULL;
-		}			
-		new->next=temp->next;
-		temp->next=new;
+			new->next==NULL;
+		}
+		else
+		{
+			new->next=temp->next;
+			temp->next=new;
+		}
 	}
 }	
 			
