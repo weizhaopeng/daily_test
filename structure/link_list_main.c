@@ -17,6 +17,17 @@ int main (void)
 	link_list_insert(head,posi);
 	link_list_print(head);	
 
+	puts("删除结点：1——删除，0——跳过");
+	int delete_judge;
+	scanf("%d",&delete_judge);
+	if(delete_judge)
+	{	
+		printf("请输入要删除第*个结点\n");
+		int delete_posi;
+		scanf("%d",&delete_posi);
+		link_list_delete(head,delete_posi);
+	}	
+	link_list_print(head);
 	return 0;
 }
 
