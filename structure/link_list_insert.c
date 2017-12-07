@@ -4,14 +4,14 @@ void link_list_insert(NODE *head,int n)
 	NODE *new,*temp;
 
 	new=(NODE *)malloc(sizeof(NODE));
-	puts("请输入学生姓名和学号：\n；例如：魏朝鹏 15011630");
-	scanf("%s%d",new->student.name,&new->student.num);
-	
 	if (new==NULL)
 	{
 		puts("memory allocation failed");
 		exit(-1);
 	}
+
+	puts("请输入学生姓名和学号：\n；例如：魏朝鹏 15011630");
+	scanf("%s%d",new->student.name,&new->student.num);
 	
 	temp=head;	
 	if (n==1)
