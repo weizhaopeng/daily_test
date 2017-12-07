@@ -1,5 +1,5 @@
 #include"struct.h"
-void link_list_insert(NODE *head,int n)
+void link_list_insert(NODE **head,int n)
 {
 	NODE *new,*temp;
 
@@ -12,12 +12,13 @@ void link_list_insert(NODE *head,int n)
 
 	puts("请输入学生姓名和学号：\n；例如：魏朝鹏 15011630");
 	scanf("%s%d",new->student.name,&new->student.num);
-	
-	temp=head;	
+	printf("\n");
+
+	temp=*(head);	
 	if (n==1)
 	{
-		new->next=head;
-		head=new;
+		new->next=*(head);
+		*(head)=new;
 	}
 	else
 	{
