@@ -8,5 +8,10 @@
 char *array1;
 void fun2();
 
+struct node{
+	int a;
+	int b;
+};
+typedef struct node NODE;
 
 #endif

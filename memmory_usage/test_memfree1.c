@@ -1,16 +1,23 @@
 #include"test_memfree.h"
 
-void fun1()
+NODE *fun1()
 {
-	extern char *array1;
-	printf("%s\n",array1);
+	NODE arr[5]={"0"};
+	NODE *list[5];
+
+	for(int i=0;i<5;i++)
+		list[i]=arr+i;
+	
+	return list;
 }
-char *array1="nihao";
 
 int main (void)
 {
-	fun1();
-	fun2();
+	NODE *list[5];
+	list=fun1();
+
+	for(int i=0;i<5;i++)
+		printf("%d\n",list[i]->a);
 
 	return 0;
 }
