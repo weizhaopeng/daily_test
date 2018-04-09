@@ -1,11 +1,31 @@
-#include"stdio.h"
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+
 int main (void)
 {
-int a,b,c;
-//double d;
-//char f;
-printf("请输入三个整型数值\n");
-scanf("%2d,%3d,%4d",&a,&b,&c);
-printf("a=%d\nb=%d\nc=%d\n",a,b,c);
-return 0;
+	int 	 a;
+	char 	 b;
+	char 	 c[10], *buf = NULL;
+	double   d;
+	uint32_t f;
+	uint16_t g;
+	size_t   h;
+
+	buf = malloc(sizeof(char)*10);
+
+	/*
+	scanf("%*d%s%lf", c, &d);
+	printf("%s%lf", c, d);
+	*/
+	/*
+	sscanf("nihao 3345", "%s%d", c, &f);
+	printf("%s%d", c, f);
+	*/
+	sscanf("nihaowojiao", "%5s", buf);
+	printf("%s", buf);
+	
+	if (buf)
+		free(buf);
+	return 0;
 }
