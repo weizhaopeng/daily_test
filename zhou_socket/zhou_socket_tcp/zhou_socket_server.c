@@ -34,9 +34,9 @@ int main(int argc, char **argv)
 		return -1;
 	}
 	//通过对监听端口进行监听，用循环将listen_fd绑定上本地的地址和端口
-	int   conn_fd, ret;
-	int   len = sizeof(struct sockaddr);
-	char *buf = malloc(sizeof(20));
+	int        conn_fd, ret;
+	socklen_t  len = sizeof(struct sockaddr);
+	char   	   *buf = malloc(sizeof(20));
 
 	while (1) {
 		//接受的时候使用的地址是客户端的地址，会将接收到的客户端地址和端口填入传递的地址空间中，在被调函数中可以进行查看,注意长度传递的是地址
