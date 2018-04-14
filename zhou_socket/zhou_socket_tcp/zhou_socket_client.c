@@ -9,21 +9,16 @@ int main(int argc, char **argv)
 		perror("creat socket");
 		return -1;
 	}
+
 	//填充服务器地址和端口
-	int 			    ret;
-	socklen_t			len = sizeof(struct sockaddr_in);
-	struct sockaddr_in *cli_addr = NULL;
+	int 			   ret;
+	socklen_t		   len = sizeof(struct sockaddr_in);
+	struct sockaddr_in cli_addr;
 
-	cli_addr = malloc(sizeof(struct sockaddr_in));
-	if (cli_addr == NULL) {
-		perror("malloc cli_addr");
-		return -1;
-	}
-
-	cli_addr->sin_family 		= AF_INET;
-	cli_addr->sin_port   		= htons(18);
+	cli_addr.sin_family 		= AF_INET;
+	cli_addr.sin_port   		= htons(SOCKPORT);
 	//用地址转换函数将表达式转换成32位in_addr_t
-	ret = inet_pton(AF_INET, "120.79.130.38", &cli_addr->sin_addr.s_addr);
+	ret = inet_pton(AF_INET, "120.79.130.38", &cli_addr.sin_addr.s_addr);
 //int inet_pton(int family, const char *ptr, void *cli_addr);
 	//const char *inet_ntop(int family, void *cli_addr, char *ptr, socklen_t sock_len);
 	if (ret < 0) {
@@ -37,7 +32,7 @@ int main(int argc, char **argv)
 	}
 
 	//连接服务器套接字
-	ret = connect(sock_fd, (struct sockaddr*)cli_addr, sizeof(struct sockaddr));
+	ret = connect(sock_fd, (struct sockaddr *)&cli_addr, sizeof(struct sockaddr));
 	if (ret = -1) {
 		perror("connect");
 		return -1;
@@ -49,10 +44,6 @@ int main(int argc, char **argv)
 		return -1;
 	}
 	
-	if (cli_addr != NULL) {
-		free(cli_addr);
-		cli_addr = NULL;
-	}
 	return 0;
 }
 

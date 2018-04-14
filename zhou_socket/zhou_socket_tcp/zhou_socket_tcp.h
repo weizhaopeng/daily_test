@@ -17,5 +17,7 @@
 //bzero函数头文件
 #include <strings.h>
 
+#define SOCKPORT 	  19
+#define SERVER_ADDR_P 120.79.130.38
 
 #endif
