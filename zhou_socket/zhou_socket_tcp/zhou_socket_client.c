@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	cli_addr.sin_family 		= AF_INET;
 	cli_addr.sin_port   		= htons(SOCKPORT);
 	//用地址转换函数将表达式转换成32位in_addr_t
-	ret = inet_pton(AF_INET, "120.79.130.38", &cli_addr.sin_addr.s_addr);
+	ret = inet_pton(AF_INET, "127.0.0.1", &cli_addr.sin_addr.s_addr);
 //int inet_pton(int family, const char *ptr, void *cli_addr);
 	//const char *inet_ntop(int family, void *cli_addr, char *ptr, socklen_t sock_len);
 	if (ret < 0) {
@@ -33,12 +33,12 @@ int main(int argc, char **argv)
 
 	//连接服务器套接字
 	ret = connect(sock_fd, (struct sockaddr *)&cli_addr, sizeof(struct sockaddr));
-	if (ret = -1) {
+	if (ret == -1) {
 		perror("connect");
 		return -1;
 	}
 	
-	ret = write(sock_fd, "nihao", sizeof(char)*6);
+	ret = write(sock_fd, "你好我叫魏朝鹏", sizeof(char)*6);
 	if (ret == -1) {
 		perror("write data");
 		return -1;
