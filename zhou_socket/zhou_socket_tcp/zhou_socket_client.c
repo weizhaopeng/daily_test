@@ -37,13 +37,24 @@ int main(int argc, char **argv)
 		perror("connect");
 		return -1;
 	}
-	
-	ret = write(sock_fd, "你好我叫魏朝鹏", sizeof(char)*6);
+	//TODO建立连接后的数据传输
+	char msg[20], buf[20];
+
+	puts("input the message");
+	scanf("%s", msg);
+	ret = write(sock_fd, msg, sizeof(msg));
 	if (ret == -1) {
 		perror("write data");
 		return -1;
 	}
 	
+	ret = read(sock_fd, buf, sizeof(buf));
+	if (ret == -1) {
+		perror("read data");
+		return -1;
+	}
+	printf("%s\n", buf);
+
 	return 0;
 }
 

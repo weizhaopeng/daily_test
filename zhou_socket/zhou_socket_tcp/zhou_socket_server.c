@@ -49,9 +49,20 @@ int main(int argc, char **argv)
 		//TODO:在连接之后进行的数据操作
 		pid = fork();
 		if (pid == 0) {
+			//关闭子进程的监听描述符
 			close(sock_fd);
+
 			ret = read(conn_fd, buf, 20);
-			printf("%s", buf);
+			if (ret == -1) {
+				perror("read");
+				exit(-1);
+			}
+
+			ret = write(conn_fd, buf+2, 10);
+			if (ret == -1) {
+				perror("write");
+				exit(-1);
+			}
 			exit(0);
 		}
 
