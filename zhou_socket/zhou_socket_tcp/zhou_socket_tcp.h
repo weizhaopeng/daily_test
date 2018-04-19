@@ -20,4 +20,11 @@
 #define SOCKPORT 	  19
 #define SERVER_ADDR_P 120.79.130.38
 
+/*
+ *提供了连接tcp的通用的外部接口
+ */
+int zhou_tcp_server(struct sockaddr *cli_addr, socklen_t *cli_len, in_port_t *tcp_port);
+
+int zhou_tcp_client(struct sockaddr *ser_addr, socklen_t *ser_len, in_port_t *ser_port);
+
 #endif
