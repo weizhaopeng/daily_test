@@ -16,7 +16,10 @@
 #include <arpa/inet.h>
 //bzero函数头文件
 #include <strings.h>
-
+//信号函数头文件
+#include <signal.h>
+//select函数头文件
+#include <sys/select.h>
 #define SOCKPORT 	  19
 #define SERVER_ADDR_P 120.79.130.38
 
