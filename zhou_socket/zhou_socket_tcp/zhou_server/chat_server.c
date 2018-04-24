@@ -1,6 +1,6 @@
 #include "zhou_socket_tcp.h"
 
-int chat_server(int connfd, pipe) {
+int main(int argc, char *argv[], char *envp[]) {
 	//定义了select的参数：maxfdp1， 读写描述符集，读写缓冲区
 	int maxfdp1;
 	fd_set rset, wset;
@@ -30,7 +30,7 @@ int chat_server(int connfd, pipe) {
 				return -1;
 			}
 			else {
-				//TODO 执行进程间通信，将读到的内容传递给另一个进程
+				//TODO 使用多线程通信，将读到的内容传递给另一个进程
 			}
 
 			if (write(connfd, &write)) {

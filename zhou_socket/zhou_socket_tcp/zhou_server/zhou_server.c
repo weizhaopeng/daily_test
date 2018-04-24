@@ -59,6 +59,11 @@ int main(int argc, char **argv)
 		chat_pid = fork();
 		if (chat_pid == 0) {
 			//TODO 执行的函数或者程序操作
+			ret = execvpe("chat_server", child_argv, envp);
+			if (ret < 0) {
+				perror("child process");
+				return -1;
+			}
 			close(listenfd);
 		}
 		close(connfd);

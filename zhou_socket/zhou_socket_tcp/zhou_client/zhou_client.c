@@ -34,22 +34,21 @@ int main(int argc, char **argv)
 	}
 	
 	//call the client process
-	pit_t chat_client;
+	pit_t chat_pid;
 
-	chat_client = fork();
-	if (chat_client == 0) {
-		ret = execv("./chat_client", connfd);
+	chat_pid = fork();
+	if (chat_pid == 0) {
+		ret = chat_client(connfd);
 		if (ret == -1) {
-			perror("client:");
+			perror("chat");
 			exit(-1);
 		}
+		exit(0);
 	}
 	
 	//close the fd
-	ret = close(connfd);
-	if (ret < 0) {
-		perror("file description close");
-		return -1;
+	close(connfd);
+	return 0;
 	}
 }
 
