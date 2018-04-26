@@ -1,0 +1,13 @@
+
+				ed_attr_destroy            pthread_attr_setaffinity_np     pthread_cleanup_pop_restore_np  pthread_getschedparam           pthread_setname_np
+				pthread_attr_getaffinity_np     pthread_attr_setdetachstate     pthread_cleanup_push            pthread_join                    pthread_setschedparam
+				pthread_attr_getdetachstate     pthread_attr_setguardsize       pthread_cleanup_push_defer_np   pthread_kill                    pthread_setschedprio
+				pthread_attr_getguardsize       pthread_attr_setinheritsched    pthread_create                  pthread_kill_other_threads_np   pthread_sigmask
+				pthread_attr_getinheritsched    pthread_attr_setschedparam      pthread_detach                  pthread_rwlockattr_getkind_np   pthread_sigqueue
+				pthread_attr_getschedparam      pthread_attr_setschedpolicy     pthread_equal                   pthread_rwlockattr_setkind_np   pthread_testcancel
+				pthread_attr_getschedpolicy     pthread_attr_setscope           pthread_exit                    pthreads                        pthread_timedjoin_np
+				pthread_attr_getscope           pthread_attr_setstack           pthread_getaffinity_np          pthread_self                    pthread_tryjoin_np
+				pthread_attr_getstack           pthread_attr_setstackaddr       pthread_getattr_np              pthread_setaffinity_np          pthread_yield
+				pthread_attr_getstackaddr       pthread_attr_setstacksize       pthread_getconcurrency          pthread_setcancelstate          
+				pthread_attr_getstacksize       pthread_cancel                  pthread_getcpuclockid           pthread_setcanceltype           
+				pthread_attr_init               pthread_cleanup_pop             pthread_getname_np              pthread_setconcurrency   

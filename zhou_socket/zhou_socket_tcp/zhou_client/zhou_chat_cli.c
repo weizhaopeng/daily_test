@@ -2,7 +2,8 @@
 
 #define max(a, b) (a > b?a:b)
 
-int chat_client(int connfd) {
+int zhou_chat_cli(int connfd) {
+
 	int maxfdp1;
 	fd_set rset, wset;
 	char rbuf[MAXSIZE], wbuf[MAXSIZE];
