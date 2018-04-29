@@ -1,13 +1,13 @@
 #include "fun_in_struct.h"
 
-void WordPrint(char *word)
+void WordPrint()
 {
 	if (word)
 		printf("%s\n", word);
 	return;
 }
 
-int CountPrint(int count)
+int CountPrint(void)
 {
 	printf("%d\n", count);
 	return count;

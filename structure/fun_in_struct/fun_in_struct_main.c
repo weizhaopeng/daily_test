@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 	printf("%d\n",obj.count_print(obj.count));
 	return 0;
 	*/
-
+	/*
 	data_store_object *obj = {
 		->word  = "nihao",
 		->count = 34,
@@ -55,6 +55,18 @@ int main(int argc, char **argv)
 	obj->word_print(obj->word);
 	printf("%d\n",obj->count_print(obj->count));
 	return 0;
+	*/
+	
+	//观察在一个结构体中内嵌函数能不能像类一样定义构造函数
+	data_store_object *obj = NULL;
+	obj = malloc(sizeof(data_store_object));
+	obj->word  = "nihao";
+	obj->count = 1;
+	obj->word_print  = WordPrint;
+	obj->count_print = CountPrint;
 
+	obj->word_print;
+	obj->count_print;
+	return 0;
 }
 

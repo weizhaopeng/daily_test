@@ -6,6 +6,8 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <strings.h>
+#include <stdint.h>
+#include <unistd.h>
 
 /*
  *进行tcp连接

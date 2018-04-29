@@ -7,12 +7,12 @@
 typedef struct {
 	char *word;
 	int   count;
-	void (*word_print)(char *word);
-	int  (*count_print)(int count);
+	void (*word_print)(void);
+	int  (*count_print)(void);
 } data_store_object;
 
-void WordPrint(char *word);
-int CountPrint(int count);
+void WordPrint();
+int CountPrint(void);
 
 
 #endif
