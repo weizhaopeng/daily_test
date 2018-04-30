@@ -4,7 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <sys/socket.h>
 
+#define MAXSIZE 200
 /*
  *进行数据交换，实现聊天功能：
  *1.从键盘(stdin)读取信息发送到服务器

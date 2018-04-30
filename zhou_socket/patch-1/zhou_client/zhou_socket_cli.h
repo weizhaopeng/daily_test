@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <unistd.h>
 
+#define SIN_PORT 5535
 /*
  *进行tcp连接
  */
