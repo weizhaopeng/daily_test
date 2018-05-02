@@ -1,6 +1,13 @@
 #ifndef _ZHOU_SOCKET_SER_H_
 #define _ZHOU_SOCKET_SER_H_
 
+typedef struct addrpair {
+	struct sockaddr_in *seraddr;
+	socklen_t 		   *seraddr_len;
+	struct sockaddr_in *cliaddr;
+	socklen_t		   *cliaddr_len;
+}addrpair;
+
 //功能函数
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,7 +30,6 @@
 
 
 //tcp connect 
-int zhou_socket_ser(const uint16_t port, struct sockaddr_in *cli_addr);
-int zhou_socket_free(int connfd);
+int zhou_socket_ser(addrpair *ap);
 
 #endif
