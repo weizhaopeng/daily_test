@@ -26,12 +26,12 @@ int zhou_chat_cli(FILE *fp, const int connfd)
 			else 
 				if (ret < 0)
 					return -1;
-			write(stdout, rbuf, MAXSIZE);
+			write(fileno(stdout), rbuf, MAXSIZE);
 		}
 
 		if (FD_ISSET(inputfd, &rset)) {
 			if (ret = read(inputfd, wbuf, MAXSIZE) == 0) {
-					shutdown(connfd, SHUT_WD);
+					shutdown(connfd, SHUT_RD);
 					FD_CLR(inputfd, &rset);
 					break;
 			}

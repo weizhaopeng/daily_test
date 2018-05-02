@@ -19,7 +19,7 @@ int zhou_socket_cli(const char *server_ip, const uint16_t port)
 	int 			   ret;
 
 	servaddr_in.sin_family 		= AF_INET;
-	servaddr_in.sin_port	    = htons(SOCK_PORT);
+	servaddr_in.sin_port	    = htons(SIN_PORT);
 	ret = inet_pton(AF_INET, server_ip, &servaddr_in.sin_addr.s_addr);
 	if (ret < 0)
 		return -1;
@@ -29,7 +29,7 @@ int zhou_socket_cli(const char *server_ip, const uint16_t port)
 	}
 
 	//connect the server
-	ret = connect(connfd, (struct sockaddr*)servaddr_in, sizeof(servaddr_in));
+	ret = connect(connfd, (struct sockaddr*)&servaddr_in, sizeof(servaddr_in));
 	if (ret == -1)
 		return -1;
 	else

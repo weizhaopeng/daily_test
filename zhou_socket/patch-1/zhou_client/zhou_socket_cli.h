@@ -8,6 +8,8 @@
 #include <strings.h>
 #include <stdint.h>
 #include <unistd.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 #define SIN_PORT 5535
 /*

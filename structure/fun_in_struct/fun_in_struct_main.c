@@ -58,15 +58,18 @@ int main(int argc, char **argv)
 	*/
 	
 	//观察在一个结构体中内嵌函数能不能像类一样定义构造函数
-	data_store_object *obj = NULL;
-	obj = malloc(sizeof(data_store_object));
+	data_store_object *obj = malloc(sizeof(data_store_object));
+	
 	obj->word  = "nihao";
 	obj->count = 1;
+
 	obj->word_print  = WordPrint;
 	obj->count_print = CountPrint;
 
-	obj->word_print;
-	obj->count_print;
+	obj->word_print (obj->word);
+	obj->count_print(obj->count);
+
+	free(obj);
 	return 0;
 }
 
