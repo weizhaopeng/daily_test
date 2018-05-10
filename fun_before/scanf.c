@@ -4,10 +4,9 @@
 
 int main (void)
 {
-	int 	 a;
-	char 	 b;
-	char 	 c[10], *buf = NULL;
-	double   d;
+	int 	 a, a1, a2;
+	char 	 b, c[10], *buf = NULL;
+	float	 d, d1;
 	uint32_t f;
 	uint16_t g;
 	size_t   h;
@@ -40,9 +39,19 @@ int main (void)
 	printf("%s\n", buf);
 	 */
 
-	
+	/*TODO 读取float类型的浮点数
+	scanf("%a,%A", &d, &d1);
+	printf("%lf\t%lf\n", d, d1);
+	*/
+
+	scanf("%i%i%i", &a, &a1, &a2);
+	printf("%i %i %i\n", a, a1, a2);
+
 	if (buf)
 		free(buf);
+
+	
+	
 	return 0;
 	
 }
