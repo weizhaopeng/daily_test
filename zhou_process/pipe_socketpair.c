@@ -2,8 +2,11 @@
 #include <strings.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <errno.h>
 
 #include <unistd.h>
+#include <wait.h>
 
 #include <sys/select.h>
 #include <poll.h>
@@ -22,30 +25,33 @@ int main(int argc, char *argv[]) {
 
 	//TODO cp1 send
 	if (pid1 == 0) {
-		char 			buf1[100];
-		int  			ret, maxfd1 = max(STDIN_FILENO, fd[1])+1;
-		fd_set 		   *rset, *wset;
-		struct timeval *timeout = {tv_sec:10, tv_usec:20};
+		char 		   buf1[100];
+		int  		   ret, maxfd1 = max(STDIN_FILENO, fd[1])+1;
+		fd_set 		   rset, wset;
+		struct timeval timeout = {
+			.tv_sec  = 10,
+			.tv_usec = 20
+		};
 
-		FD_SET(fd[1], rset);
-		FD_SET(fd[1], write);
-		FD_SET(STDIN_FILENO, rset);
+		FD_SET(fd[1], &rset);
+		FD_SET(fd[1], &wset);
+		FD_SET(STDIN_FILENO, &rset);
 		close(fd[0]);
 
 		while (1) {
-			bzero(buf, 100);
+			bzero(buf1, 100);
 			fflush(stdout);
 			fflush(stdin);
 
-			ret = select(maxfd1, rset, wset, 0, timeout);
+			ret = select(maxfd1, &rset, &wset, 0, &timeout);
 			if (ret > 1) {
-				if (FD_ISSET(STDIN_FILENO, rset) && FD_ISSET(fd[1], wset)) {
-					read(fileno(stdin), buf, 100);
-					write(fd[1], buf, 100);
+				if (FD_ISSET(STDIN_FILENO, &rset) && FD_ISSET(fd[1], &wset)) {
+					read(fileno(stdin), buf1, 100);
+					write(fd[1], buf1, 100);
 				}
-				if (FD_ISSET(fd[1], rset)) {
-					read(fd[1], buf, 100);
-					write(STDOUT_FILENO, buf, 100);
+				if (FD_ISSET(fd[1], &rset)) {
+					read(fd[1], buf1, 100);
+					write(STDOUT_FILENO, buf1, 100);
 				}
 			}
 			if (ret == -1 && errno == EINTR)
@@ -55,26 +61,26 @@ int main(int argc, char *argv[]) {
 
 	//TODO cp2 process
 	if (pid2 == 0) {
-		struct pollfd fds[2]
+		struct pollfd fds[2];
 		char   		  buf2[100], buf3[50] = "from cp2";
-		int 		  ret, nfds = 2, timeut = 20;
+		int 		  ret, nfds = 2, timeout = 20;
 	
-		fds[0].fd 	 = fd[0];
-		fds[0].event = POLLIN;
-		fds[1].fd    = fd[0];
-		fds[1].event = POLLOUT;
+		fds[0].fd 	  = fd[0];
+		fds[0].events = POLLIN;
+		fds[1].fd     = fd[0];
+		fds[1].events = POLLOUT;
 
 		close(fd[1]);
 		while(1) {
-			ret = poll(fd, nfds, timeout);
+			ret = poll(fds, nfds, timeout);
 			if (ret > 0) {
-				if (fds[0].revent == POLLIN) {
+				if (fds[0].revents == POLLIN) {
 					if (read(fd[0], buf2, 50) > 0)
 						strncat(buf2, buf3, 50);
 					else
 						exit(0);
 				}
-				if (fds[1],revent == POLLOUT)
+				if (fds[1].revents == POLLOUT)
 					write(fd[0], buf2, 100);
 			}
 			if (ret == -1 && errno == EINTR)
@@ -86,7 +92,7 @@ int main(int argc, char *argv[]) {
 
 	//TODO cp1 receive and print
 	waitpid(pid1, 0, 0);
-	wiatpid(pid2, 0, 0);
+	waitpid(pid2, 0, 0);
 	return 0;
 }
 
