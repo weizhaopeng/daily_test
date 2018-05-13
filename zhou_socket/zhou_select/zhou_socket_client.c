@@ -1,0 +1,85 @@
+#include "zhou_socket_tcp.h"
+
+#define max(a, b) (a > b? a : b)
+
+static inline int data_send(FILE *fp, const int connfd);
+
+int main(int argc, char **argv)
+{
+	//创建客户端socket
+	int sock_fd;
+	sock_fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (sock_fd <= 0) {
+		perror("creat socket");
+		return -1;
+	}
+
+	//填充服务器地址和端口
+	int 			   ret;
+	socklen_t		   len = sizeof(struct sockaddr_in);
+	struct sockaddr_in cli_addr;
+
+	cli_addr.sin_family 		= AF_INET;
+	cli_addr.sin_port   		= htons(SOCKPORT);
+	//用地址转换函数将表达式转换成32位in_addr_t
+	ret = inet_pton(AF_INET, "172.16.252.209", &cli_addr.sin_addr.s_addr);
+//int inet_pton(int family, const char *ptr, void *cli_addr);
+	//const char *inet_ntop(int family, void *cli_addr, char *ptr, socklen_t sock_len);
+	if (ret < 0) {
+		perror("address translate");
+		return -1;
+	}
+	
+	else if (ret = 0) {
+		puts("表达式不正确");
+		return 0;
+	}
+
+	//连接服务器套接字
+	ret = connect(sock_fd, (struct sockaddr *)&cli_addr, sizeof(struct sockaddr));
+	if (ret == -1) {
+		perror("connect");
+		return -1;
+	}
+	else 
+		puts("连接成功\n");
+	//TODO建立连接后的数据传输
+	ret = data_send(stdin, sock_fd);
+	if (ret == -1)
+		return -1;
+	else 
+		return 0;
+}
+
+static inline int data_send(FILE *fp, const int connfd) {
+	int    maxfd1 = max(fileno(fp), connfd), ret;
+	fd_set rset, wset;
+	char   buf[100];
+	struct timeval timeout = {
+		.tv_sec  = 100,
+		.tv_usec = 20
+	};
+	
+	FD_SET(fileno(fp), &rset);
+	FD_SET(connfd, &rset);
+	FD_SET(connfd, &wset);
+	
+	ret = select(maxfd1+1, &rset, &wset, NULL, &timeout);
+	if (ret == -1)
+		return -1;
+	
+	if (FD_ISSET(fileno(fp), &rset) > 0) {
+		read(fileno(fp), buf, 100);
+		if (FD_ISSET(connfd, &wset) > 0) {
+			write(connfd, buf, 100);
+			if (FD_ISSET(connfd, &rset) > 0) {
+				read(connfd, buf, 100);
+				printf("%s", buf);
+			}
+		}
+	}
+	return 0;
+}
+	
+
+		
