@@ -59,23 +59,29 @@ static inline int data_send(FILE *fp, const int connfd) {
 		.tv_sec  = 100,
 		.tv_usec = 20
 	};
+	FD_ZERO(&rset);
+	FD_ZERO(&wset);
+	FD_SET(fileno(fp), 	   &rset);
+	FD_SET(fileno(stdout), &wset);
+	FD_SET(connfd, 		   &rset);
+	FD_SET(connfd, 		   &wset);
 	
-	FD_SET(fileno(fp), &rset);
-	FD_SET(connfd, &rset);
-	FD_SET(connfd, &wset);
-	
-	ret = select(maxfd1+1, &rset, &wset, NULL, &timeout);
-	if (ret == -1)
-		return -1;
-	
-	if (FD_ISSET(fileno(fp), &rset) > 0) {
-		read(fileno(fp), buf, 100);
-		if (FD_ISSET(connfd, &wset) > 0) {
-			write(connfd, buf, 100);
-			if (FD_ISSET(connfd, &rset) > 0) {
-				read(connfd, buf, 100);
-				printf("%s", buf);
-			}
+	while (1) {
+		ret = select(maxfd1+1, &rset, &wset, NULL, &timeout);
+		if (ret == -1)
+			return -1;
+
+		if (FD_ISSET(fileno(fp), &rset)) {
+			read(fileno(fp), buf, 100);
+			if (FD_ISSET(connfd, &wset))
+				write(connfd, buf, 100);
+		}
+
+		if (FD_ISSET(connfd, &rset) > 0) {
+			ret = read(connfd, buf, 100);
+			
+			if (FD_ISSET(STDOUT_FILENO, &wset) > 0)
+				write(STDOUT_FILENO, buf, ret);
 		}
 	}
 	return 0;
