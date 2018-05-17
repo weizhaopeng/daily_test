@@ -67,16 +67,20 @@ int main(int argc, char **argv)
 
 static inline int data_reflect(const int connfd) {
 	struct timeval timeout = {
-		tv_sec: 100,
+		tv_sec : 100,
 		tv_usec: 20
 	};
 	int    maxfd1 = connfd+1, ret;
 	fd_set rset, wset;
 	char   buf[100];
 
+	strncpy(buf,"from the server:\n", 17);
 	while(1) {
+		FD_ZERO(&rset);
+		FD_ZERO(&wset);
 		FD_SET(connfd, &rset);
 		FD_SET(connfd, &wset);
+
 		ret = select(maxfd1, &rset, &wset, NULL, &timeout);
 		if (ret < 0) {
 			if (errno == EINTR) 
@@ -85,16 +89,11 @@ static inline int data_reflect(const int connfd) {
 				return -1;
 		}
 
-		if (FD_ISSET(connfd, &rset) > 0) {
-			ret = read(connfd, buf, 100);
-			if (FD_ISSET(connfd, &wset) > 0)
-				ret = write(connfd, buf, 100);
-			if (ret == -1) {
-				if (errno == EINTR)
-					continue;
-				else
-					return -1;
-			}
+		if (FD_ISSET(connfd, &rset)) {
+			ret = read(connfd, buf+17, 93);
+			if (FD_ISSET(connfd, &wset))
+				write(connfd, buf, 100);
+			bzero(buf+17, 93);
 		}
 	}
 	return 0;

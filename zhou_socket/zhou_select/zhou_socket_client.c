@@ -52,36 +52,39 @@ int main(int argc, char **argv)
 }
 
 static inline int data_send(FILE *fp, const int connfd) {
-	int    maxfd1 = max(fileno(fp), connfd), ret;
+	int    maxfd1 = max(fileno(fp), connfd)+1, ret;
 	fd_set rset, wset;
 	char   buf[100];
 	struct timeval timeout = {
 		.tv_sec  = 100,
 		.tv_usec = 20
 	};
-	FD_ZERO(&rset);
-	FD_ZERO(&wset);
-	FD_SET(fileno(fp), 	   &rset);
-	FD_SET(fileno(stdout), &wset);
-	FD_SET(connfd, 		   &rset);
-	FD_SET(connfd, 		   &wset);
 	
 	while (1) {
-		ret = select(maxfd1+1, &rset, &wset, NULL, &timeout);
+		FD_ZERO(&rset);
+		FD_ZERO(&wset);
+		FD_SET(fileno(fp), 	   &rset);
+		FD_SET(fileno(stdout), &wset);
+		FD_SET(connfd, 		   &rset);
+		FD_SET(connfd, 		   &wset);
+
+		ret = select(maxfd1, &rset, &wset, NULL, &timeout);
 		if (ret == -1)
 			return -1;
 
 		if (FD_ISSET(fileno(fp), &rset)) {
-			read(fileno(fp), buf, 100);
-			if (FD_ISSET(connfd, &wset))
-				write(connfd, buf, 100);
+			read(fileno(fp), buf, 80);
+			if (FD_ISSET(connfd, &wset)) {
+				write(connfd, buf, 80);
+			}
 		}
+		bzero(buf, 100);
 
-		if (FD_ISSET(connfd, &rset) > 0) {
+		if (FD_ISSET(connfd, &rset)) {
 			ret = read(connfd, buf, 100);
-			
-			if (FD_ISSET(STDOUT_FILENO, &wset) > 0)
-				write(STDOUT_FILENO, buf, ret);
+			if (FD_ISSET(STDOUT_FILENO, &wset) > 0) {
+				write(STDOUT_FILENO, buf, 100);
+			}
 		}
 	}
 	return 0;

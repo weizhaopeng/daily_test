@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 //socket相关函数和sockaddr地址
 #include <sys/socket.h>
 #include <sys/types.h>
