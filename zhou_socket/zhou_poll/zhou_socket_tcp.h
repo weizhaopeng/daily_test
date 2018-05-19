@@ -17,6 +17,8 @@
 #include <arpa/inet.h>
 //bzero函数头文件
 #include <strings.h>
+//poll函数头文件
+#include <poll.h>
 
 #define SOCKPORT 	  19
 #define SERVER_ADDR_P 120.79.130.38

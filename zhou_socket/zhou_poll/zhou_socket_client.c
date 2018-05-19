@@ -52,28 +52,46 @@ int main(int argc, char **argv)
 }
 
 static inline int data_send(FILE *fp, const int connfd) {
-	struct pollfd fds[3];
-	nfds_t 		  fds_num = 3;
-	int    		  timeout = 20;
-	fds[0].fd 	  = fileno(fp);
+	struct pollfd fds[4];
+	nfds_t 		  fds_num = 4;
+	int    		  timeout = 20, ret;
+	unsigned char buf[100];
+	fds[0].fd	  = fileno(fp);
 	fds[0].events = POLLIN;
 	fds[1].fd 	  = connfd;
 	fds[1].events = POLLIN;
 	fds[2].fd 	  = connfd;
 	fds[2].events = POLLOUT;
+	fds[3].fd	  = STDOUT_FILENO;
+	fds[3].events = POLLOUT;
 
 	while (1) {
 		ret = poll(fds, fds_num, timeout);
-		if (ret == -1)
-			return -1;
-		if (fds[0].revent == POLLIN) {
-			read(fds[0].fd, buf, 100);
+		if (ret == -1) {
+			if (errno == EINTR)
+				continue;
+			else
+				return -1;
+		}
+		if (fds[0].revents == POLLIN) {
+			ret = read(fds[0].fd, buf, 100);
+			if (ret == 0) {
+				close(connfd);
+				return -1;
+			}
 			if (fds[2].revents == POLLOUT)
 				write(fds[2].fd, buf, 100);
 		}
-		if (fds[1],revents == POLLIN) {
+		if (fds[1].revents == POLLIN) {
 			read(fds[1].fd, buf, 100);
-			write
+			if (fds[3].revents == POLLOUT) 
+				write(fds[3].fd, buf, 100);
+			bzero(buf, 100);
+		}
+	}
+	return 0;
+}
+		
 
 
 
