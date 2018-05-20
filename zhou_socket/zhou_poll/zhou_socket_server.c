@@ -66,13 +66,13 @@ int main(int argc, char **argv)
 }
 
 static inline int data_reflect(const int connfd) {
-	struct pollfd fds[2]j;
+	struct pollfd fds[2];
 	fds[0].fd = connfd;
 	fds[0].events = POLLIN;
 	fds[1].fd     = connfd;
 	fds[1].events = POLLOUT;
 	int timeout = 20, ret;
-	unsigned char buf[100];
+	unsigned char buf[100] = "from the server:\n";
 	nfds_t fds_num = 2;
 
 	while(1) {
@@ -85,15 +85,15 @@ static inline int data_reflect(const int connfd) {
 		}
 
 		if (fds[0].revents == POLLIN) {
-			ret = read(connfd, buf, 100);
+			ret = read(connfd, buf+17, 93);
 			if (ret == 0) {
 				close(connfd);
 				return 0;
 			}
 			else
-				if (fds[1].revent == POLLOUT) {
+				if (fds[1].revents == POLLOUT) {
 					write(connfd, buf, 100);
-					bzero(buf, 100);
+					bzero(buf+17, 93);
 				}
 		}
 	}
