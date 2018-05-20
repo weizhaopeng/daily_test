@@ -91,6 +91,10 @@ static inline int data_reflect(const int connfd) {
 
 		if (FD_ISSET(connfd, &rset)) {
 			ret = read(connfd, buf+17, 93);
+			if (ret == 0) {
+				close(connfd);
+				return 0;
+			}
 			if (FD_ISSET(connfd, &wset))
 				write(connfd, buf, 100);
 			bzero(buf+17, 93);

@@ -73,7 +73,11 @@ static inline int data_send(FILE *fp, const int connfd) {
 			return -1;
 
 		if (FD_ISSET(fileno(fp), &rset)) {
-			read(fileno(fp), buf, 80);
+			ret = read(fileno(fp), buf, 80);
+			if (ret == 0) {
+				shutdown(connfd, SHUT_RD);
+				return 0;
+			}
 			if (FD_ISSET(connfd, &wset)) {
 				write(connfd, buf, 80);
 			}
