@@ -92,7 +92,7 @@ static inline int data_reflect(const int connfd) {
 		if (FD_ISSET(connfd, &rset)) {
 			ret = read(connfd, buf+17, 93);
 			if (ret == 0) {
-				close(connfd);
+				shutdown(connfd, SHUT_WR);
 				return 0;
 			}
 			if (FD_ISSET(connfd, &wset))

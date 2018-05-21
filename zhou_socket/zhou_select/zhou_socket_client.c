@@ -75,7 +75,8 @@ static inline int data_send(FILE *fp, const int connfd) {
 		if (FD_ISSET(fileno(fp), &rset)) {
 			ret = read(fileno(fp), buf, 80);
 			if (ret == 0) {
-				shutdown(connfd, SHUT_RD);
+				//use the close is right but use the shutdown they still connect
+				close(connfd);
 				return 0;
 			}
 			if (FD_ISSET(connfd, &wset)) {
