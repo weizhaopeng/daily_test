@@ -3,14 +3,14 @@
 
 int main (int argc, char **argv)
 {
-	char *word = NULL;
-	if (word)
-		printf("word\n");
-	if (!word)
-		puts("!word");
-	word = (char *)malloc(sizeof(char)*10);
-	printf("%p\n",word);
-	word++;
-	printf("%p\n",word);
+	int *p = malloc(20);
+	char c = 'a';
+	
+	printf("%p\n", p);
+
+	//typeof(c) a;
+	char a = 'a';
+	printf("%c", a);
+	free(p);
 	return 0;
 }
