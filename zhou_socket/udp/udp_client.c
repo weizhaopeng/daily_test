@@ -27,7 +27,7 @@ int main(void) {
 	puts("socket创建成功");
 	
 	//创建并发送信息
-	puts("*******请输入要发送的信息:*******\n");
+	puts("*******请输入要发送的信息:*******");
 	scanf("%s", buf);
 	
 	ret = sendto(connfd, buf, strlen(buf), 0, 
@@ -38,6 +38,7 @@ int main(void) {
 	}
 	puts("信息已发送");
 	
+	memset(buf, 0, sizeof(char)*100);
 	ret = recvfrom(connfd, buf, 100, 0, (struct sockaddr *)(&seraddr), 
 		&seraddr_len);
 	if (ret == -1) {
@@ -45,6 +46,7 @@ int main(void) {
 		return -1;
 	}
 	puts("回执信息已接收");
+	printf("%s\n", buf);
 
 	return 0;
 }

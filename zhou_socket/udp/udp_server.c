@@ -2,9 +2,10 @@
 
 int main(void) {
 	struct sockaddr_in seraddr, cliaddr;
-	socklen_t socklen = sizeof(struct sockaddr), cliaddr_len = 0;
-	char   buf[100] = {0}, *buf_add = "服务器回执信息：";
-	int    connfd = 0, ret = 0, len = strlen(buf_add);
+	socklen_t socklen = sizeof(struct sockaddr), 
+		cliaddr_len = sizeof(struct sockaddr);
+	char   buf[100] = {0}, buf_add[100] = {"message_send_from_server:"};
+	int    connfd = 0, ret = 0;
 	
 	//初始化地址变量
 	seraddr.sin_family 		= AF_INET;
@@ -34,9 +35,8 @@ int main(void) {
 		perror("接收信息失败");
 		return -1;
 	}
-	printf("服务器接收到信息:%s\n%d\n", buf, len);
-	strncat(buf+ret, buf_add, len);
-	ret = sendto(connfd, buf, ret, 0, (struct sockaddr*)&cliaddr, cliaddr_len);
+	strncat(buf_add, buf, ret);
+	ret = sendto(connfd, buf_add, strlen(buf_add), 0, (struct sockaddr*)&cliaddr, cliaddr_len);
 	if (ret == -1) {
 		perror("回执信息失败");
 		return -1;
