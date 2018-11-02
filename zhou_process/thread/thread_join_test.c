@@ -9,7 +9,7 @@ void *thread2(void *argv);
 int main(void) {
 	pthread_t th1, th2;
 	int 	  ret = 0;
-	void 	*retval1 = NULL, *retval2 = NULL;
+	void 	 *retval1 = NULL, *retval2 = NULL;
 	char 	 *string1 = "return_from_thread1", 
 			 *string2 = "return_from_thread2";
 
