@@ -15,15 +15,22 @@ int main(void) {
 	int 	  ret = 0;
 	array_t  *at = NULL;
 	pthread_t th1, th2, th3;
-	struct timespec time_wait = {
-		.tv_sec = 5,
-		.tv_nsec = 0
-	};
+	struct timespec time_wait;
 
 	at 		  = calloc(1, sizeof(array_t));
 	at->array = calloc(1, sizeof(int)*100);
 	at->length = 0;
 	pthread_mutex_init(&at->mutex, NULL);
+
+	//FIXME 制定的超时时间是一个绝对时间，需要在当前的时间的基础上更改
+	//int clock_gettime(clockid_t clk_id, struct timespec *tp);
+	ret = clock_gettime(CLOCK_REALTIME, &time_wait);
+	if (ret == -1) {
+		puts("get real time error");
+		return -1;
+	}
+	time_wait.tv_sec += 100;
+	
 	ret = pthread_mutex_timedlock(&at->mutex, &time_wait);
 	if (ret != 0) {
 		printf("timedlock:%s\n", strerror(ret));
@@ -76,7 +83,7 @@ void *function(void *argv) {
 		printf("%d ", at->array[i]);
 	}
 	printf("\n");
-	sleep(4);
+	sleep(10);
 	pthread_mutex_unlock(&at->mutex);
 	puts("解锁成功");
 
